@@ -1,0 +1,2236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Aurex Capital</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#050505;
+    color:#fff;
+    overflow-x:hidden;
+}
+
+/* =========================
+   VARIABLES
+========================= */
+
+:root{
+    --black:#050505;
+    --dark:#0b0b0b;
+    --card:#111;
+    --gold:#d4af37;
+    --gold-light:#f5d76e;
+    --gold-dark:#8b6b16;
+    --white:#fff;
+    --gray:#999;
+    --border:rgba(212,175,55,.25);
+}
+
+/* =========================
+   ANIMATED BACKGROUND
+========================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    background:#d4af3710;
+    border-radius:50%;
+    filter:blur(100px);
+    top:-200px;
+    left:-150px;
+    pointer-events:none;
+    z-index:-1;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    background:#d4af3708;
+    border-radius:50%;
+    filter:blur(100px);
+    right:-150px;
+    bottom:-150px;
+    pointer-events:none;
+    z-index:-1;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:78px;
+    z-index:1000;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 7%;
+
+    background:rgba(5,5,5,.88);
+    backdrop-filter:blur(15px);
+
+    border-bottom:1px solid var(--border);
+}
+
+.logo{
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.logo span{
+    color:var(--gold-light);
+}
+
+nav{
+    display:flex;
+    align-items:center;
+    gap:30px;
+}
+
+nav a{
+    color:#ddd;
+    text-decoration:none;
+    font-size:14px;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:var(--gold-light);
+}
+
+.header-buttons{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.profile-area{
+    display:none;
+    align-items:center;
+    gap:10px;
+    color:var(--gold-light);
+    font-size:14px;
+    font-weight:bold;
+}
+
+.profile-area.visible{
+    display:flex;
+}
+
+.profile-avatar{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--gold);
+    color:#050505;
+}
+
+.logout-btn{
+    padding:8px 12px;
+    font-size:12px;
+}
+
+.btn{
+    border:none;
+    cursor:pointer;
+    padding:12px 20px;
+    border-radius:6px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.login-btn{
+    background:transparent;
+    color:white;
+    border:1px solid var(--border);
+}
+
+.login-btn:hover{
+    border-color:var(--gold);
+    color:var(--gold-light);
+}
+
+.gold-btn{
+    background:linear-gradient(
+        135deg,
+        var(--gold-light),
+        var(--gold)
+    );
+    color:#050505;
+    box-shadow:0 0 20px rgba(212,175,55,.18);
+}
+
+.gold-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 35px rgba(212,175,55,.3);
+}
+
+.menu{
+    display:none;
+    background:none;
+    color:white;
+    border:none;
+    font-size:27px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+
+    position:relative;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,.95) 0%,
+            rgba(0,0,0,.78) 48%,
+            rgba(0,0,0,.35) 100%
+        ),
+        url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=85");
+
+    background-size:cover;
+    background-position:center;
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            transparent,
+            #050505
+        );
+
+    pointer-events:none;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    max-width:720px;
+    margin-left:8%;
+    padding-top:70px;
+}
+
+.small-title{
+    color:var(--gold-light);
+    letter-spacing:4px;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-size:clamp(45px,7vw,82px);
+    line-height:1;
+    margin-bottom:25px;
+}
+
+.hero h1 span{
+    color:var(--gold-light);
+}
+
+.hero p{
+    color:#bbb;
+    font-size:18px;
+    line-height:1.8;
+    max-width:620px;
+}
+
+.hero-actions{
+    margin-top:30px;
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.hero-line{
+    position:absolute;
+    bottom:0;
+    left:8%;
+    width:84%;
+    height:1px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        var(--gold),
+        transparent
+    );
+    z-index:5;
+}
+
+/* =========================
+   GENERAL
+========================= */
+
+section{
+    padding:100px 8%;
+}
+
+.section-heading{
+    max-width:700px;
+    margin-bottom:55px;
+}
+
+.section-heading span{
+    color:var(--gold-light);
+    font-size:12px;
+    font-weight:bold;
+    letter-spacing:4px;
+}
+
+.section-heading h2{
+    font-size:clamp(32px,5vw,50px);
+    margin-top:12px;
+}
+
+.section-heading p{
+    color:#999;
+    line-height:1.8;
+    margin-top:15px;
+}
+
+/* =========================
+   ABOUT
+========================= */
+
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+    align-items:center;
+}
+
+.about-image{
+    height:520px;
+    border-radius:15px;
+    overflow:hidden;
+    border:1px solid var(--border);
+    position:relative;
+}
+
+.about-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:1s;
+}
+
+.about-image:hover img{
+    transform:scale(1.05);
+}
+
+.about-image::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        135deg,
+        transparent,
+        rgba(212,175,55,.15)
+    );
+}
+
+.about-text h3{
+    color:var(--gold-light);
+    font-size:28px;
+    margin-bottom:20px;
+}
+
+.about-text p{
+    color:#aaa;
+    line-height:1.9;
+    margin-bottom:20px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:30px;
+}
+
+.stat{
+    padding:20px;
+    background:#0e0e0e;
+    border:1px solid var(--border);
+    border-radius:10px;
+}
+
+.stat h3{
+    color:var(--gold-light);
+    font-size:27px;
+}
+
+.stat p{
+    font-size:12px;
+    margin:5px 0 0;
+}
+
+/* =========================
+   PRODUCTS
+========================= */
+
+.products{
+    background:#080808;
+}
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.product-card{
+    background:
+        linear-gradient(
+            145deg,
+            #151515,
+            #090909
+        );
+
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:30px;
+
+    position:relative;
+    overflow:hidden;
+
+    transition:.4s;
+}
+
+.product-card::before{
+    content:"";
+    position:absolute;
+    width:120px;
+    height:120px;
+    background:var(--gold);
+    opacity:.04;
+    border-radius:50%;
+    top:-50px;
+    right:-50px;
+}
+
+.product-card:hover{
+    transform:translateY(-8px);
+    border-color:var(--gold);
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.5),
+        0 0 30px rgba(212,175,55,.08);
+}
+
+.product-icon{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid var(--gold);
+    color:var(--gold-light);
+    font-size:27px;
+
+    margin-bottom:25px;
+
+    box-shadow:
+        inset 0 0 20px rgba(212,175,55,.08);
+}
+
+.product-card h3{
+    font-size:21px;
+    margin-bottom:12px;
+}
+
+.product-card p{
+    color:#999;
+    line-height:1.7;
+    font-size:14px;
+}
+
+/* =========================
+   WHY US
+========================= */
+
+.why{
+    background:
+        radial-gradient(
+            circle at center,
+            #d4af370b,
+            transparent 50%
+        );
+}
+
+.why-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.reason{
+    padding:30px;
+    border:1px solid var(--border);
+    border-radius:15px;
+    background:#0d0d0d;
+    transition:.3s;
+}
+
+.reason:hover{
+    transform:translateY(-5px);
+    border-color:var(--gold);
+}
+
+.reason-number{
+    color:var(--gold-light);
+    font-size:13px;
+    font-weight:bold;
+}
+
+.reason h3{
+    margin:15px 0;
+}
+
+.reason p{
+    color:#999;
+    line-height:1.7;
+    font-size:14px;
+}
+
+/* =========================
+   PLANS
+========================= */
+
+.plans{
+    background:#080808;
+}
+
+.plan-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.plan{
+    padding:30px;
+    border:1px solid #292929;
+    border-radius:15px;
+    background:#0e0e0e;
+    position:relative;
+    transition:.4s;
+}
+
+.plan:hover{
+    transform:translateY(-8px);
+    border-color:var(--gold);
+}
+
+.plan.featured{
+    border-color:var(--gold);
+    box-shadow:0 0 35px rgba(212,175,55,.08);
+}
+
+.featured-label{
+    position:absolute;
+    top:15px;
+    right:15px;
+    font-size:9px;
+    background:var(--gold);
+    color:#000;
+    padding:6px 9px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.plan h3{
+    color:var(--gold-light);
+    font-size:22px;
+}
+
+.plan-price{
+    font-size:27px;
+    font-weight:bold;
+    margin:20px 0;
+}
+
+.plan p{
+    color:#999;
+    font-size:14px;
+    line-height:1.7;
+    min-height:95px;
+}
+
+.plan button{
+    width:100%;
+    margin-top:20px;
+}
+
+/* =========================
+   CTA
+========================= */
+
+.cta{
+    text-align:center;
+    background:
+        linear-gradient(
+            135deg,
+            #151208,
+            #070707
+        );
+
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+}
+
+.cta h2{
+    font-size:clamp(35px,5vw,55px);
+    margin-bottom:15px;
+}
+
+.cta p{
+    color:#999;
+    max-width:600px;
+    margin:auto;
+    line-height:1.8;
+}
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+}
+
+.contact-info h3{
+    color:var(--gold-light);
+    font-size:28px;
+    margin-bottom:15px;
+}
+
+.contact-info p{
+    color:#999;
+    line-height:1.8;
+}
+
+.contact-item{
+    padding:18px 0;
+    border-bottom:1px solid #222;
+    color:#bbb;
+}
+
+.contact-item span{
+    color:var(--gold-light);
+    margin-right:10px;
+}
+
+.contact-form{
+    background:#0e0e0e;
+    padding:30px;
+    border:1px solid var(--border);
+    border-radius:15px;
+}
+
+.input{
+    width:100%;
+    background:#080808;
+    border:1px solid #292929;
+    color:white;
+    padding:15px;
+    border-radius:7px;
+    outline:none;
+    margin-bottom:15px;
+}
+
+.input:focus{
+    border-color:var(--gold);
+}
+
+textarea.input{
+    height:140px;
+    resize:none;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    padding:35px 8%;
+    border-top:1px solid #222;
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    color:#777;
+    font-size:13px;
+}
+
+footer strong{
+    color:var(--gold-light);
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.82);
+    backdrop-filter:blur(10px);
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    z-index:3000;
+}
+
+.modal.active{
+    display:flex;
+    animation:fadeIn .3s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0}
+    to{opacity:1}
+}
+
+.modal-box{
+    width:min(450px,90%);
+    background:#101010;
+    border:1px solid var(--gold);
+    border-radius:15px;
+    padding:35px;
+    box-shadow:0 30px 100px #000;
+    animation:modalUp .35s ease;
+}
+
+@keyframes modalUp{
+    from{
+        transform:translateY(30px) scale(.95);
+        opacity:0;
+    }
+    to{
+        transform:none;
+        opacity:1;
+    }
+}
+
+.modal-box h2{
+    color:var(--gold-light);
+    margin-bottom:8px;
+}
+
+.modal-box > p{
+    color:#777;
+    margin-bottom:25px;
+}
+
+.close{
+    float:right;
+    background:none;
+    border:none;
+    color:#aaa;
+    font-size:22px;
+    cursor:pointer;
+}
+
+.close:hover{
+    color:var(--gold-light);
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    background:#111;
+    color:white;
+    border:1px solid var(--gold);
+    border-left:4px solid var(--gold-light);
+    padding:15px 20px;
+    border-radius:8px;
+    transform:translateX(150%);
+    transition:.4s;
+    z-index:5000;
+}
+
+.toast.show{
+    transform:translateX(0);
+}
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(35px);
+    transition:1s;
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:none;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1000px){
+
+    nav{
+        display:none;
+    }
+
+    .menu{
+        display:block;
+    }
+
+    .header-buttons{
+        margin-left:auto;
+        margin-right:15px;
+    }
+
+    .about-grid,
+    .contact-grid{
+        grid-template-columns:1fr;
+    }
+
+    .product-grid,
+    .why-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .plan-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:650px){
+
+    header{
+        padding:0 5%;
+    }
+
+    .logo{
+        font-size:20px;
+    }
+
+    .header-buttons .login-btn{
+        display:none;
+    }
+
+    .hero-content{
+        margin-left:5%;
+        margin-right:5%;
+    }
+
+    section{
+        padding:75px 5%;
+    }
+
+    .product-grid,
+    .why-grid,
+    .plan-grid,
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .about-image{
+        height:350px;
+    }
+
+    footer{
+        flex-direction:column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="logo">
+        AUREX<span> CAPITAL</span>
+    </div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#products">Products</a>
+        <a href="#plans">Plans</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="header-buttons">
+
+        <button
+        class="btn login-btn"
+        onclick="openLogin()">
+            Login
+        </button>
+
+        <button
+        class="btn gold-btn"
+        onclick="openAccount()">
+            Open Account
+        </button>
+
+        <div class="profile-area" id="profileArea">
+            <div class="profile-avatar" id="profileAvatar">U</div>
+            <span id="profileName">User</span>
+            <button class="btn login-btn logout-btn" onclick="logout()">Log Out</button>
+        </div>
+
+    </div>
+
+    <button
+    class="menu"
+    onclick="mobileMenu()">
+        ☰
+    </button>
+
+</header>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section
+class="hero"
+id="home">
+
+    <div class="hero-content reveal">
+
+        <div class="small-title">
+            MODERN MINING & TRADING
+        </div>
+
+        <h1>
+            Smarter investors
+            <span>are here.</span>
+        </h1>
+
+        <p>
+            Discover a modern approach to digital markets,
+            mining and trading through technology-driven
+            financial education and market tools.
+        </p>
+
+        <div class="hero-actions">
+
+            <button
+            class="btn gold-btn"
+            onclick="openAccount()">
+                Open a Free Account
+            </button>
+
+            <button
+            class="btn login-btn"
+            onclick="scrollToSection('about')">
+                Learn More
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="hero-line"></div>
+
+</section>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section id="about">
+
+    <div class="section-heading reveal">
+
+        <span>ABOUT US</span>
+
+        <h2>
+            Technology meets modern markets.
+        </h2>
+
+        <p>
+            Aurex Capital is presented as a modern-day
+            mining and trading company using state-of-the-art
+            technology to provide market tools and services
+            for clients around the world.
+        </p>
+
+    </div>
+
+
+    <div class="about-grid">
+
+        <div class="about-image reveal">
+
+            <img
+            src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1000&q=85"
+            alt="Professional business environment">
+
+        </div>
+
+
+        <div class="about-text reveal">
+
+            <h3>
+                Trusted & Professional Mining /
+                Trading Services
+            </h3>
+
+            <p>
+                Our concept combines digital asset markets,
+                financial technology, market research and
+                modern trading tools into one streamlined
+                platform.
+            </p>
+
+            <p>
+                We focus on creating an accessible environment
+                where users can learn about markets, explore
+                different asset classes and understand how
+                modern trading systems work.
+            </p>
+
+            <button
+            class="btn gold-btn"
+            onclick="openAccount()">
+                Open Account
+            </button>
+
+
+            <div class="stats">
+
+                <div class="stat">
+                    <h3 class="counter"
+                    data-target="20">
+                        0
+                    </h3>
+                    <p>Crypto Assets</p>
+                </div>
+
+                <div class="stat">
+                    <h3 class="counter"
+                    data-target="24">
+                        0
+                    </h3>
+                    <p>Market Access</p>
+                </div>
+
+                <div class="stat">
+                    <h3 class="counter"
+                    data-target="100">
+                        0
+                    </h3>
+                    <p>Digital Tools</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PRODUCTS
+========================= -->
+
+<section
+class="products"
+id="products">
+
+    <div class="section-heading reveal">
+
+        <span>OUR PRODUCTS</span>
+
+        <h2>
+            Mining / Trading Products
+        </h2>
+
+        <p>
+            Explore major market categories through our
+            educational and technology-focused platform.
+        </p>
+
+    </div>
+
+
+    <div class="product-grid">
+
+
+        <div class="product-card reveal">
+
+            <div class="product-icon">
+                ◐
+            </div>
+
+            <h3>
+                Cryptocurrencies
+            </h3>
+
+            <p>
+                Explore selected digital assets and learn
+                about cryptocurrency markets, blockchain
+                technology and digital-asset trading.
+            </p>
+
+        </div>
+
+
+        <div class="product-card reveal">
+
+            <div class="product-icon">
+                ≋
+            </div>
+
+            <h3>
+                Forex
+            </h3>
+
+            <p>
+                Learn about currency pairs and the global
+                foreign-exchange market through modern
+                market information and analytical tools.
+            </p>
+
+        </div>
+
+
+        <div class="product-card reveal">
+
+            <div class="product-icon">
+                📈
+            </div>
+
+            <h3>
+                Stocks & ETFs
+            </h3>
+
+            <p>
+                Discover how publicly traded companies and
+                exchange-traded funds operate across global
+                financial markets.
+            </p>
+
+        </div>
+
+
+        <div class="product-card reveal">
+
+            <div class="product-icon">
+                ◎
+            </div>
+
+            <h3>
+                Options
+            </h3>
+
+            <p>
+                Understand options markets, contracts and
+                the concepts behind derivatives trading.
+            </p>
+
+        </div>
+
+
+        <div class="product-card reveal">
+
+            <div class="product-icon">
+                🛡
+            </div>
+
+            <h3>
+                Metals
+            </h3>
+
+            <p>
+                Explore precious metals including gold and
+                other commodities used throughout global
+                markets.
+            </p>
+
+        </div>
+
+
+        <div class="product-card reveal">
+
+            <div class="product-icon">
+                ⇅
+            </div>
+
+            <h3>
+                Futures
+            </h3>
+
+            <p>
+                Learn about futures contracts and how
+                commodity and financial futures markets
+                function.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     WHY US
+========================= -->
+
+<section class="why">
+
+    <div class="section-heading reveal">
+
+        <span>WHY AUREX?</span>
+
+        <h2>
+            Why would you invest anywhere else?
+        </h2>
+
+        <p>
+            A modern platform should combine technology,
+            transparency and education.
+        </p>
+
+    </div>
+
+
+    <div class="why-grid">
+
+        <div class="reason reveal">
+
+            <div class="reason-number">
+                01
+            </div>
+
+            <h3>
+                Modern Technology
+            </h3>
+
+            <p>
+                Designed around modern digital interfaces
+                and technology-driven market tools.
+            </p>
+
+        </div>
+
+
+        <div class="reason reveal">
+
+            <div class="reason-number">
+                02
+            </div>
+
+            <h3>
+                Global Perspective
+            </h3>
+
+            <p>
+                Learn about multiple asset classes and
+                markets operating across the world.
+            </p>
+
+        </div>
+
+
+        <div class="reason reveal">
+
+            <div class="reason-number">
+                03
+            </div>
+
+            <h3>
+                Easy Experience
+            </h3>
+
+            <p>
+                A clean interface designed to make navigating
+                market information straightforward.
+            </p>
+
+        </div>
+
+
+        <div class="reason reveal">
+
+            <div class="reason-number">
+                04
+            </div>
+
+            <h3>
+                Market Education
+            </h3>
+
+            <p>
+                Understand market concepts before making
+                financial decisions.
+            </p>
+
+        </div>
+
+
+        <div class="reason reveal">
+
+            <div class="reason-number">
+                05
+            </div>
+
+            <h3>
+                Multiple Markets
+            </h3>
+
+            <p>
+                Explore cryptocurrency, forex, stocks,
+                metals, options and futures.
+            </p>
+
+        </div>
+
+
+        <div class="reason reveal">
+
+            <div class="reason-number">
+                06
+            </div>
+
+            <h3>
+                Built for the Future
+            </h3>
+
+            <p>
+                A digital-first concept designed around
+                the changing financial technology landscape.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PLANS
+========================= -->
+
+<section
+class="plans"
+id="plans">
+
+    <div class="section-heading reveal">
+
+        <span>OUR OFFERS</span>
+
+        <h2>
+            Choose Your Plan
+        </h2>
+
+        <p>
+            Sample plan tiers for this website demonstration.
+            These figures do not represent guaranteed returns
+            or an actual investment product.
+        </p>
+
+    </div>
+
+
+    <div class="plan-grid">
+
+
+        <div class="plan reveal">
+
+            <h3>
+                Starter
+            </h3>
+
+            <div class="plan-price">
+                $101 – $599
+            </div>
+
+            <p>
+                A beginner-oriented sample tier for users
+                who want to explore market education and
+                digital trading concepts.
+            </p>
+
+            <button
+            class="btn gold-btn"
+            onclick="choosePlan('Starter')">
+                Choose Plan
+            </button>
+
+        </div>
+
+
+        <div class="plan reveal">
+
+            <h3>
+                Advanced
+            </h3>
+
+            <div class="plan-price">
+                $601 – $1,999
+            </div>
+
+            <p>
+                A sample intermediate tier designed around
+                broader market tools and educational resources.
+            </p>
+
+            <button
+            class="btn gold-btn"
+            onclick="choosePlan('Advanced')">
+                Choose Plan
+            </button>
+
+        </div>
+
+
+        <div class="plan featured reveal">
+
+            <div class="featured-label">
+                POPULAR
+            </div>
+
+            <h3>
+                Professional
+            </h3>
+
+            <div class="plan-price">
+                $5,000 – $10,000
+            </div>
+
+            <p>
+                A fictional professional-tier interface
+                demonstrating a higher-level market research
+                experience.
+            </p>
+
+            <button
+            class="btn gold-btn"
+            onclick="choosePlan('Professional')">
+                Choose Plan
+            </button>
+
+        </div>
+
+
+        <div class="plan reveal">
+
+            <h3>
+                Masters
+            </h3>
+
+            <div class="plan-price">
+                $12,000+
+            </div>
+
+            <p>
+                A premium demonstration tier for showcasing
+                advanced platform features and market tools.
+            </p>
+
+            <button
+            class="btn gold-btn"
+            onclick="choosePlan('Masters')">
+                Choose Plan
+            </button>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CTA
+========================= -->
+
+<section class="cta">
+
+    <div class="reveal">
+
+        <h2>
+            Start exploring today.
+        </h2>
+
+        <p>
+            Create a free demo account and explore the
+            Aurex Capital experience.
+        </p>
+
+        <button
+        class="btn gold-btn"
+        style="margin-top:25px"
+        onclick="openAccount()">
+
+            Get Started Now
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section id="contact">
+
+    <div class="section-heading reveal">
+
+        <span>CONTACT US</span>
+
+        <h2>
+            Let's talk.
+        </h2>
+
+        <p>
+            Have a question about our platform?
+            Send us a message.
+        </p>
+
+    </div>
+
+
+    <div class="contact-grid">
+
+        <div class="contact-info reveal">
+
+            <h3>
+                Contact Aurex
+            </h3>
+
+            <p>
+                Our fictional demonstration company provides
+                information about digital markets, technology
+                and trading concepts.
+            </p>
+
+            <div class="contact-item">
+                <span>✉</span>
+                hello@aurex-demo.example
+            </div>
+
+            <div class="contact-item">
+                <span>☎</span>
+                +000 000 000 000
+            </div>
+
+            <div class="contact-item">
+                <span>⌖</span>
+                Global Digital Markets
+            </div>
+
+        </div>
+
+
+        <form
+        class="contact-form reveal"
+        onsubmit="sendMessage(event)">
+
+            <input
+            class="input"
+            id="name"
+            placeholder="Your name"
+            required>
+
+            <input
+            class="input"
+            id="email"
+            type="email"
+            placeholder="Email address"
+            required>
+
+            <textarea
+            class="input"
+            id="message"
+            placeholder="Your message"
+            required></textarea>
+
+            <button
+            class="btn gold-btn"
+            style="width:100%">
+                Send Message
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div>
+        © 2026 <strong>Aurex Capital</strong>
+    </div>
+
+    <div>
+        Demo website • Educational interface
+    </div>
+
+</footer>
+
+
+<!-- =========================
+     LOGIN MODAL
+========================= -->
+
+<div
+class="modal"
+id="loginModal"
+onclick="outsideClose(event,'loginModal')">
+
+    <div class="modal-box">
+
+        <button
+        class="close"
+        onclick="closeModal('loginModal')">
+            ✕
+        </button>
+
+        <h2>
+            Welcome Back
+        </h2>
+
+        <p>
+            Login to your account.
+        </p>
+
+        <input
+        class="input"
+        id="loginEmail"
+        type="email"
+        placeholder="Email">
+
+        <input
+        class="input"
+        id="loginPassword"
+        type="password"
+        placeholder="Password">
+
+        <button
+        class="btn gold-btn"
+        style="width:100%"
+        onclick="login()">
+            Login
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     ACCOUNT MODAL
+========================= -->
+
+<div
+class="modal"
+id="accountModal"
+onclick="outsideClose(event,'accountModal')">
+
+    <div class="modal-box">
+
+        <button
+        class="close"
+        onclick="closeModal('accountModal')">
+            ✕
+        </button>
+
+        <h2>
+            Open Free Account
+        </h2>
+
+        <p>
+            Create a demo account to explore the platform.
+        </p>
+
+        <input
+        class="input"
+        id="registerName"
+        placeholder="Full name">
+
+        <input
+        class="input"
+        id="registerEmail"
+        type="email"
+        placeholder="Email address">
+
+        <input
+        class="input"
+        id="registerPassword"
+        type="password"
+        placeholder="Create password">
+
+        <button
+        class="btn gold-btn"
+        style="width:100%"
+        onclick="register()">
+
+            Create Account
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+function mobileMenu(){
+
+    const nav=document.querySelector("nav");
+
+    if(nav.style.display==="flex"){
+
+        nav.style.display="none";
+
+    }else{
+
+        nav.style.display="flex";
+
+        nav.style.position="absolute";
+        nav.style.top="78px";
+        nav.style.left="0";
+        nav.style.width="100%";
+
+        nav.style.flexDirection="column";
+        nav.style.padding="25px";
+
+        nav.style.background="#090909";
+
+        nav.style.borderBottom=
+        "1px solid rgba(212,175,55,.3)";
+
+    }
+
+}
+
+
+/* =========================
+   SCROLL
+========================= */
+
+function scrollToSection(id){
+
+    document
+    .getElementById(id)
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================
+   MODALS
+========================= */
+
+function openLogin(){
+
+    document
+    .getElementById("loginModal")
+    .classList.add("active");
+
+}
+
+function openAccount(){
+
+    document
+    .getElementById("accountModal")
+    .classList.add("active");
+
+}
+
+function closeModal(id){
+
+    document
+    .getElementById(id)
+    .classList.remove("active");
+
+}
+
+function outsideClose(event,id){
+
+    if(event.target.id===id){
+
+        closeModal(id);
+
+    }
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function login(){
+
+    const email=
+    document
+    .getElementById("loginEmail")
+    .value;
+
+    const password=
+    document
+    .getElementById("loginPassword")
+    .value;
+
+    const account=JSON.parse(localStorage.getItem("aurexAccount") || "null");
+
+    if(!email || !password){
+
+        showToast(
+            "Please enter your email and password."
+        );
+
+        return;
+
+    }
+
+    if(!account || account.email.toLowerCase()!==email.toLowerCase() || account.password!==password){
+
+        showToast("Incorrect email or password. Create an account first.");
+
+        return;
+
+    }
+
+    closeModal("loginModal");
+
+    setLoggedIn(account);
+
+    showToast(
+        "Login successful. Welcome back!"
+    );
+
+}
+
+
+/* =========================
+   REGISTER
+========================= */
+
+function register(){
+
+    const name=
+    document
+    .getElementById("registerName")
+    .value;
+
+    const email=
+    document
+    .getElementById("registerEmail")
+    .value;
+
+    const password=
+    document
+    .getElementById("registerPassword")
+    .value;
+
+    if(!name || !email || !password){
+
+        showToast(
+            "Please complete all fields."
+        );
+
+        return;
+
+    }
+
+    const account={name:name,email:email,password:password};
+
+    localStorage.setItem("aurexAccount",JSON.stringify(account));
+    localStorage.setItem("aurexLoggedIn","true");
+
+    closeModal("accountModal");
+
+    setLoggedIn(account);
+
+    showToast(
+        "Account created successfully!"
+    );
+
+}
+
+function setLoggedIn(account){
+
+    localStorage.setItem("aurexLoggedIn","true");
+    document.getElementById("profileName").textContent=account.name;
+    document.getElementById("profileAvatar").textContent=account.name.charAt(0).toUpperCase();
+    document.getElementById("profileArea").classList.add("visible");
+    document.querySelector(".header-buttons > .login-btn").style.display="none";
+    document.querySelector(".header-buttons > .gold-btn").style.display="none";
+
+}
+
+function logout(){
+
+    localStorage.removeItem("aurexLoggedIn");
+    document.getElementById("profileArea").classList.remove("visible");
+    document.querySelector(".header-buttons > .login-btn").style.display="";
+    document.querySelector(".header-buttons > .gold-btn").style.display="";
+    showToast("You have been logged out.");
+
+}
+
+
+/* =========================
+   PLAN
+========================= */
+
+function choosePlan(plan){
+
+    showToast(
+        plan+
+        " plan selected. This is a demo interface."
+    );
+
+}
+
+
+/* =========================
+   CONTACT
+========================= */
+
+function sendMessage(event){
+
+    event.preventDefault();
+
+    document
+    .getElementById("name")
+    .value="";
+
+    document
+    .getElementById("email")
+    .value="";
+
+    document
+    .getElementById("message")
+    .value="";
+
+    showToast(
+        "Message sent successfully!"
+    );
+
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+function showToast(message){
+
+    let toast=
+    document.querySelector(".toast");
+
+    if(!toast){
+
+        toast=document.createElement("div");
+
+        toast.className="toast";
+
+        document.body.appendChild(toast);
+
+    }
+
+    toast.textContent=message;
+
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },3000);
+
+}
+
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+
+const observer=
+new IntersectionObserver(
+entries=>{
+
+    entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+
+            entry.target
+            .classList
+            .add("visible");
+
+        }
+
+    });
+
+},
+{
+    threshold:.12
+});
+
+
+document
+.querySelectorAll(".reveal")
+.forEach(element=>{
+
+    observer.observe(element);
+
+});
+
+
+/* =========================
+   COUNTERS
+========================= */
+
+const counterObserver=
+new IntersectionObserver(
+entries=>{
+
+    entries.forEach(entry=>{
+
+        if(!entry.isIntersecting)
+            return;
+
+        const counter=entry.target;
+
+        const target=
+        Number(counter.dataset.target);
+
+        let current=0;
+
+        const increment=
+        Math.max(1,Math.ceil(target/50));
+
+        const timer=
+        setInterval(()=>{
+
+            current+=increment;
+
+            if(current>=target){
+
+                current=target;
+
+                clearInterval(timer);
+
+            }
+
+            counter.textContent=
+            current+"+";
+
+        },30);
+
+        counterObserver.unobserve(counter);
+
+    });
+
+},
+{
+    threshold:.7
+});
+
+
+document
+.querySelectorAll(".counter")
+.forEach(counter=>{
+
+    counterObserver.observe(counter);
+
+});
+
+const savedAccount=JSON.parse(localStorage.getItem("aurexAccount") || "null");
+
+if(savedAccount && localStorage.getItem("aurexLoggedIn")==="true"){
+    setLoggedIn(savedAccount);
+}
+
+
+/* =========================
+   GOLD CURSOR EFFECT
+========================= */
+
+document.addEventListener(
+"mousemove",
+e=>{
+
+    const glow=
+    document.querySelector(".cursor-glow");
+
+    if(!glow)
+        return;
+
+    glow.style.left=
+    e.clientX+"px";
+
+    glow.style.top=
+    e.clientY+"px";
+
+});
+
+
+/* =========================
+   KEYBOARD ESCAPE
+========================= */
+
+document.addEventListener(
+"keydown",
+event=>{
+
+    if(event.key==="Escape"){
+
+        document
+        .querySelectorAll(".modal")
+        .forEach(modal=>{
+
+            modal.classList.remove("active");
+
+        });
+
+    }
+
+});
+
+
+/* =========================
+   BUTTON RIPPLE
+========================= */
+
+document
+.querySelectorAll(".btn")
+.forEach(button=>{
+
+    button.addEventListener(
+    "click",
+    function(e){
+
+        const ripple=
+        document.createElement("span");
+
+        ripple.style.position="absolute";
+        ripple.style.borderRadius="50%";
+        ripple.style.width="10px";
+        ripple.style.height="10px";
+        ripple.style.background="rgba(255,255,255,.4)";
+        ripple.style.transform="scale(0)";
+        ripple.style.left=e.offsetX+"px";
+        ripple.style.top=e.offsetY+"px";
+        ripple.style.pointerEvents="none";
+
+        this.style.position="relative";
+        this.style.overflow="hidden";
+
+        this.appendChild(ripple);
+
+        ripple.animate(
+        [
+            {
+                transform:"scale(0)",
+                opacity:1
+            },
+            {
+                transform:"scale(15)",
+                opacity:0
+            }
+        ],
+        {
+            duration:600
+        });
+
+        setTimeout(()=>{
+            ripple.remove();
+        },600);
+
+    });
+
+});
+
+</script>
+A
+</body>
+</html>
